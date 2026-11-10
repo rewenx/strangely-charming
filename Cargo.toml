@@ -1,6 +1,6 @@
 [package]
 name = "strangely_charming"
-version = "0.2.11"
+version = "0.2.42"
 edition = "2024"
 description = "Configurable crafting, exploration, and village features for Horizon"
 

@@ -22,7 +22,7 @@ pub(super) fn key(game: &mut Game<'_>, key: &str, pressed: bool) {
             && key == game.native_mod_key("strangely_charming", "portable_crafting", "key.keyboard.v")
             && horizon_mods::evanders_config::enabled("portable_crafting");
         let tidy = key
-            == game.native_mod_key("strangely_charming", "inventory_tidying", "key.keyboard.y")
+            == game.native_mod_key("strangely_charming", "inventory_tidying", "key.mouse.middle")
             && horizon_mods::evanders_config::enabled("inventory_tidying");
         if (portable || tidy) && game.remote.is_some() {
             let mut data = vec![if portable { 1 } else { 2 }];
@@ -60,7 +60,7 @@ pub(super) fn key(game: &mut Game<'_>, key: &str, pressed: bool) {
             || game.screen == super::Screen::Inventory
             || game.creative_inventory_open())
         && horizon_mods::evanders_config::enabled("inventory_tidying")
-        && key == game.native_mod_key("strangely_charming", "inventory_tidying", "key.keyboard.y")
+        && key == game.native_mod_key("strangely_charming", "inventory_tidying", "key.mouse.middle")
     {
         let container = game
             .container
@@ -191,6 +191,9 @@ pub(super) fn level_tick(game: &mut Game<'_>) {
     let ticking = game.entity_ticking_area();
     for m in &mut game.mobs {
         if let Some(raw) = game.persist.raw.get_mut(&m.id) {
+            if m.kind.flags.burns_in_day && matches!(raw.get(super::sc_graves::TEST_MOB), Some(Tag::Byte(1))) {
+                std::sync::Arc::make_mut(&mut m.kind).flags.burns_in_day = false;
+            }
             poison::before_tick(
                 m,
                 raw,

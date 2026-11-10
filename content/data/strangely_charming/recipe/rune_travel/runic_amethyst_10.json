@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "minecraft:amethyst_block",
+  "result": {
+    "id": "strangely_charming:runic_amethyst_10",
+    "count": 1
+  }
+}

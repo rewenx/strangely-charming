@@ -9,7 +9,6 @@ use serde::{Deserialize, Serialize};
 const ISSUER: &str = "strangely_charming:issuer";
 const CONTRACT: &str = "strangely_charming:contract";
 const OWNER: &str = "strangely_charming:contract_owner";
-const ADDRESS: &str = "strangely_charming:issuer_location";
 const CHANNEL: &str = "strangely_charming:quest/";
 fn string(v: impl Into<String>) -> Tag {
     Tag::String(v.into().as_str().into())
@@ -40,16 +39,16 @@ impl Kind {
             _ => return None,
         })
     }
-    fn objective(self) -> &'static str {
+    pub(super) fn objective(self) -> &'static str {
         match self {
-            Self::Wheat => "Deliver 12 wheat",
-            Self::Bread => "Craft 8 bread",
-            Self::Coal => "Mine 12 coal ore (either stone type)",
-            Self::Zombies => "Defeat 5 zombies, personally or with a tamed wolf",
-            Self::Books => "Deliver 16 books",
+            Self::Wheat => "obtain 12 wheat",
+            Self::Bread => "bake 8 loaves of bread",
+            Self::Coal => "mine 12 blocks of coal ore or deepslate coal ore",
+            Self::Zombies => "defeat 5 zombies yourself or with your tamed wolf",
+            Self::Books => "obtain 16 books",
         }
     }
-    fn target(self) -> u32 {
+    pub(super) fn target(self) -> u32 {
         match self {
             Self::Wheat | Self::Coal => 12,
             Self::Bread => 8,
@@ -57,7 +56,7 @@ impl Kind {
             Self::Books => 16,
         }
     }
-    fn reward(self) -> u32 {
+    pub(super) fn reward(self) -> u32 {
         match self {
             Self::Wheat => 3,
             Self::Bread => 5,
@@ -65,6 +64,17 @@ impl Kind {
             Self::Zombies => 10,
             Self::Books => 12,
         }
+    }
+    pub(super) fn hero_rank(self) -> usize {
+        match self {
+            Self::Wheat => 1,
+            Self::Bread => 2,
+            Self::Coal => 3,
+            Self::Zombies | Self::Books => 4,
+        }
+    }
+    pub(super) fn hero_name(self) -> &'static str {
+        ["I", "II", "III", "IV"][self.hero_rank() - 1]
     }
     fn delivery(self) -> Option<&'static str> {
         match self {
@@ -78,8 +88,6 @@ impl Kind {
 struct Contract {
     serial: u64,
     kind: Kind,
-    issuer: Option<String>,
-    label: String,
     progress: u32,
     #[serde(default)]
     notified: bool,
@@ -155,56 +163,63 @@ impl Game<'_> {
             horizon_client::lan::playerdata::ints_uuid(self.mob_uuid(id))
         )
     }
-    pub(super) fn sc_keeper_died(&mut self, id: u32) {
-        let key = format!("strangely_charming:lost_keepers/{}", self.sc_keeper_id(id));
-        self.score
-            .storage
-            .set(&key, Tag::compound([("lost", Tag::Byte(1))]));
-    }
-    fn sc_can_claim(&self, c: &Contract, keeper: &str) -> bool {
-        c.issuer.as_ref().is_none_or(|issuer| {
-            issuer == keeper
-                || self
-                    .score
-                    .storage
-                    .get(&format!("strangely_charming:lost_keepers/{issuer}"))
-                    .get("lost")
-                    .is_some()
-        })
-    }
     pub(super) fn sc_stamp_scrolls(&mut self, i: usize) {
         let id = self.sc_keeper_id(self.mobs[i].id);
         let m = &mut self.mobs[i];
-        let label = format!(
-            "{} at {}, {}, {}",
-            m.custom_name.as_deref().unwrap_or("Scrollkeeper"),
-            m.position.x.floor() as i32,
-            m.position.y.floor() as i32,
-            m.position.z.floor() as i32
-        );
         if let Some(t) = &mut m.extra.trade {
             for offer in &mut t.offers {
-                if Kind::item(&offer.result.item).is_some() {
+                if let Some(kind) = Kind::item(&offer.result.item) {
+                    // Saved offers from 0.2.39 retain their original zero XP until reopened.
+                    if offer.xp == 0 {
+                        offer.xp = match kind {
+                            Kind::Wheat => 2, Kind::Bread => 5, Kind::Coal => 10,
+                            Kind::Zombies => 15, Kind::Books => 20,
+                        };
+                    }
                     set_custom(&mut offer.result, ISSUER, string(&id));
-                    set_custom(&mut offer.result, ADDRESS, string(&label));
                 }
             }
         }
     }
     pub(super) fn sc_scroll(&mut self, stack: &ItemStack, kind: Kind) {
-        if custom(stack, CONTRACT).is_some() {
-            self.sc_journal(None);
-            return;
+        let mut ledger = self.sc_load();
+        let preview = if let Some(Tag::Long(serial)) = custom(stack, CONTRACT) {
+            let owner = format!("{:032x}", self.native_acting_id());
+            if text_value(custom(stack, OWNER)).as_deref() != Some(&owner) {
+                self.sc_notice("This scroll belongs to another player.");
+                return;
+            }
+            let Some(contract) = ledger.active.iter().find(|c| c.serial == *serial as u64 && c.kind == kind) else {
+                self.sc_notice("This contract is no longer active.");
+                return;
+            };
+            super::sc_journal::QuestPreview {
+                serial: contract.serial,
+                kind,
+                progress: Some(self.sc_progress(contract)),
+            }
+        } else {
+            ledger.serial = ledger.serial.saturating_add(1);
+            let serial = ledger.serial;
+            // The seller stamp identifies the unsigned offer while the confirmation is open.
+            ledger.preview = Some((serial, self.held_slot(), kind, text_value(custom(stack, ISSUER))));
+            self.sc_save(&ledger);
+            super::sc_journal::QuestPreview {
+                serial,
+                kind,
+                progress: None,
+            }
+        };
+        let data = serde_json::to_vec(&preview).expect("serializable quest preview");
+        if self.lan_acting_uuid.is_some() {
+            use horizon_protocol::packets::{configuration::CustomPayload, play::Clientbound};
+            let who = self.native_acting_id();
+            self.native_send(who, Clientbound::CustomPayload(CustomPayload {
+                channel: super::sc_journal::QUEST_VIEW.into(), data,
+            }));
+        } else {
+            self.sc_receive_quest_preview(&data);
         }
-        let mut l = self.sc_load();
-        l.serial = l.serial.saturating_add(1);
-        let issuer = text_value(custom(stack, ISSUER));
-        let label = text_value(custom(stack, ADDRESS)).unwrap_or_else(|| "any Scrollkeeper".into());
-        let serial = l.serial;
-        l.preview = Some((serial, self.held_slot(), kind, issuer));
-        self.sc_save(&l);
-        self.sc_dialog("Quest scroll",format!("{}. Return to {}. Reward: {} emeralds and {} XP. No deadline.\n\nGive an unemployed adult villager a Writing Desk (two books over four planks) to employ a Scrollkeeper. Sneak-use the villager to hand in quests. Open your journal with J.",kind.objective(),label,kind.reward(),kind.reward()*3),
-            vec![button("Accept",&format!("accept/{serial}")),button("Decline and discard",&format!("decline/{serial}"))]);
     }
     fn sc_progress(&mut self, c: &Contract) -> u32 {
         c.kind
@@ -249,7 +264,7 @@ impl Game<'_> {
                 let instruction = if own_scroll {
                     "Sneak right click your scroll on a Scrollkeeper to turn it in."
                 } else {
-                    "Sneak right click your Scrollkeeper and choose Claim in the journal."
+                    "Sneak right click any Scrollkeeper and choose Claim in the journal."
                 };
                 self.sc_alert(format!("{opening} {instruction}"), true);
             }
@@ -309,17 +324,16 @@ impl Game<'_> {
             let target = c.kind.target();
             let fill = (8 * n / target) as usize;
             body.push_str(&format!(
-                "\n\n#{}  {}\n[{}{}]  {n}/{target}  •  {}\nReward: {} emeralds and {} XP",
+                "\n\n#{}  {}\n[{}{}]  {n}/{target}  •  Any Scrollkeeper\nReward: {} emeralds and {} XP",
                 c.serial,
                 c.kind.objective(),
                 "|".repeat(fill),
                 ".".repeat(8 - fill),
-                c.label,
                 c.kind.reward(),
                 c.kind.reward() * 3
             ));
             if n == target
-                && let Some(id) = keeper.filter(|id| self.sc_can_claim(c, id))
+                && let Some(id) = keeper
             {
                 actions.push(button(
                     format!("Claim #{}", c.serial),
@@ -377,13 +391,9 @@ impl Game<'_> {
                     self.sc_notice("Both quest slots are occupied.");
                     return;
                 }
-                let label =
-                    text_value(custom(stack, ADDRESS)).unwrap_or_else(|| "Any Scrollkeeper".into());
                 l.active.push(Contract {
                     serial,
                     kind: *kind,
-                    issuer: issuer.clone(),
-                    label,
                     progress: 0,
                     notified: false,
                 });
@@ -445,8 +455,8 @@ impl Game<'_> {
         };
         let c = &l.active[i];
         let kind = c.kind;
-        if !self.sc_can_claim(c, keeper) || self.sc_progress(c) < kind.target() {
-            self.sc_notice("This contract is not ready for this Scrollkeeper.");
+        if self.sc_progress(c) < kind.target() {
+            self.sc_notice("The quest criteria are not complete yet.");
             return;
         }
         if self.native_room_for("minecraft:emerald") < kind.reward() {
@@ -459,6 +469,12 @@ impl Game<'_> {
         self.sc_remove_scroll(serial);
         self.native_give_items("minecraft:emerald", kind.reward());
         self.experience.give((kind.reward() * 3) as i32);
+        // Apply the raid victory effect to the acting player, without claiming a raid victory.
+        let mut hero = horizon_client::effects::EffectInstance::new(
+            "hero_of_the_village", horizon_client::raid::HERO_DURATION, (kind.hero_rank() - 1) as i32,
+        );
+        hero.visible = false;
+        self.potions.effects.add(hero);
         l.active.remove(i);
         self.sc_save(&l);
         let m = &mut self.mobs[index];

@@ -1,7 +1,15 @@
 fn hook(game: &mut crate::game::Game<'_>, stack: &ItemStack) -> core::ops::ControlFlow<bool> {
     if game.remote.is_some()
-        && ((stack.item.as_ref() == crate::game::sc_items::TOTEM
-            && horizon_mods::evanders_config::enabled("enchanting_totems"))
+        && ((crate::game::sc_travel::handles(&stack.item)
+            && (stack.item.as_ref() != crate::game::sc_travel::BOOK || !game.native_sneaking()))
+            || (stack.item.as_ref() == crate::game::sc_runes::PEARL
+                && crate::game::sc_runes::enabled())
+            || (stack.item.as_ref() == crate::game::sc_field_items::SLIME
+                && horizon_mods::evanders_config::enabled("slime_stone"))
+            || (stack.item.as_ref() == crate::game::sc_field_items::KNOWLEDGE
+                && horizon_mods::evanders_config::enabled("knowledge_stone"))
+            || (stack.item.as_ref() == crate::game::sc_items::TOTEM
+                && horizon_mods::evanders_config::enabled("enchanting_totems"))
             || (crate::game::sc_quests::Kind::item(&stack.item).is_some()
                 && horizon_mods::evanders_config::enabled("scrollkeepers")))
     {

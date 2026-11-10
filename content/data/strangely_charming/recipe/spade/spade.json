@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "strangely_charming:spade",
+  "pattern": [
+    "S  ",
+    " PP"
+  ],
+  "key": {
+    "S": "minecraft:stick",
+    "P": "#minecraft:planks"
+  },
+  "result": {
+    "id": "strangely_charming:spade",
+    "count": 1
+  }
+}

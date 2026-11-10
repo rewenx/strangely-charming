@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/cube_column",
   "textures": {
-    "end": "minecraft:block/stone",
+    "end": "strangely_charming:block/rune_top_bot",
     "side": "strangely_charming:block/runestone_14"
   }
 }

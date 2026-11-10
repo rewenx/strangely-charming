@@ -1,4 +1,8 @@
 fn hook(m: &Mob, s: &State, p: &mut Poses, a: &Animations) -> core::ops::ControlFlow<bool> {
+    if m.kind.id == "strangely_charming:protogen" {
+        super::evanders_models::pose_protogen(s, p);
+        return core::ops::ControlFlow::Break(true);
+    }
     if m.extra.using_item <= 0 || !matches!(m.kind.anim, super::Anim::Humanoid { .. }) {
         return core::ops::ControlFlow::Continue(());
     }

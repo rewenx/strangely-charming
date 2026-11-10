@@ -34,3 +34,12 @@ __pycache__/
 *.minisig
 *.key
 .env
+
+# The release carries the runtime art for these licensed assets.
+/content/assets/strangely_charming/textures/block/amethyst_*.png
+/content/assets/strangely_charming/textures/block/runic_amethyst_*.png
+/content/assets/strangely_charming/textures/block/*_tombstone.png
+/content/assets/strangely_charming/models/block/*_tombstone.json
+/mixins/strangely_charming/content_bundle.rs
+!/tools/release_art.py
+!/tools/release_art.json

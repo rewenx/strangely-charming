@@ -12,11 +12,23 @@ struct Alert {
     since: Option<Instant>,
 }
 thread_local! { static QUEUE: RefCell<VecDeque<Alert>> = RefCell::default(); }
+thread_local! { static LAST_RUNE_WARNING: std::cell::Cell<Option<Instant>> = const { std::cell::Cell::new(None) }; }
 pub(super) fn clear() {
+    LAST_RUNE_WARNING.set(None);
     QUEUE.with_borrow_mut(VecDeque::clear);
 }
 
 impl Game<'_> {
+    pub(super) fn sc_warn_runebreaker(&mut self) {
+        let now = Instant::now();
+        if LAST_RUNE_WARNING
+            .get()
+            .is_none_or(|last| now.duration_since(last) >= Duration::from_secs(10))
+        {
+            LAST_RUNE_WARNING.set(Some(now));
+            self.sc_notice("I need a runebreaker to break this");
+        }
+    }
     pub(super) fn sc_notice(&mut self, text: impl Into<String>) {
         self.sc_alert(text.into(), false);
     }
@@ -74,28 +86,30 @@ impl Game<'_> {
             };
             let since = alert.since.get_or_insert_with(Instant::now);
             let duration = Duration::from_secs(if alert.text.len() > 60 { 6 } else { 3 });
-            if since.elapsed() >= duration {
+            let elapsed = since.elapsed();
+            if elapsed >= duration {
                 queue.pop_front();
                 return;
             }
-            let atlas = &self.gui.atlas;
-            let lines = horizon_client::multiplayer::wrap(
-                &alert.text,
-                (batch.width - 20.).clamp(60., 370.),
-                atlas,
-            );
-            let top = (batch.height - lines.len() as f32 * 10.) * 0.5;
-            for (i, line) in lines.iter().enumerate() {
-                let x = (batch.width - HudBatch::text_width(atlas, line)) * 0.5;
-                batch.text(
-                    atlas,
-                    line,
-                    x.round(),
-                    top.round() + i as f32 * 10.,
-                    rgba(255, 255, 85, 255),
-                    true,
-                );
-            }
+            let alpha = ((duration - elapsed).as_secs_f32() / 0.8).min(1.) * 255.;
+            self.sc_yellow_text(batch, &alert.text, alpha.round() as u8, 0.);
         });
+    }
+    pub(super) fn sc_yellow_text(&self, batch: &mut HudBatch, text: &str, alpha: u8, offset: f32) {
+        let atlas = &self.gui.atlas;
+        let lines =
+            horizon_client::multiplayer::wrap(text, (batch.width - 20.).clamp(60., 370.), atlas);
+        let top = (batch.height - lines.len() as f32 * 10.) * 0.5 + offset;
+        for (i, line) in lines.iter().enumerate() {
+            let x = (batch.width - HudBatch::text_width(atlas, line)) * 0.5;
+            batch.text(
+                atlas,
+                line,
+                x.round(),
+                top.round() + i as f32 * 10.,
+                rgba(255, 255, 85, alpha),
+                true,
+            );
+        }
     }
 }

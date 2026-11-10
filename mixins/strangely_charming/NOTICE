@@ -28,9 +28,41 @@ Retreat Horn texture supplied by Evander as goat_horn.png, used unmodified. The 
 
 Moonstone, Totem of Enchanting, quest scrolls and Scrollkeeper artwork derive from Strange 1.15.2 beta.5 hotfix1. The Writing Desk art is credited to mcvinnyq. See LICENSE.charm-and-strange.
 
-Runebreaker sprite: tool_fancy_diamond_hammer.png by Malcolm Riley, unmodified.
+Runebreaker sprite: tool_fancy_diamond_hammer.png by Malcolm Riley; updated sprite supplied by Evander.
 https://github.com/malcolmriley/unused-textures/blob/8b85ad732023174d9a9da74e6bf2272d6c0bef17/items/tool_fancy_diamond_hammer.png
 Creative Commons Attribution 4.0 International: https://creativecommons.org/licenses/by/4.0/
 
 Runestone glyph sprites and the adapted Icy Chambers and Undir structure pieces are from Strange, revision 77f237c60344a20f4fc9c3b59c44b79ca129e87f. Modern jigsaw connectors and decorative marker substitutions by this port. See LICENSE.charm-and-strange.
 Title card, divider, footer and mod icon supplied by Evander.
+
+Villagers following emerald blocks is inspired by Quark (Violet Moon), Tweaks module, build 4.1-488. This implementation uses Horizon’s native mob AI.
+
+Trade cycling is inspired by Easy Villagers (henkelmax), build 1.1.49+26.3. The Horizon implementation uses its own UI and merchant code.
+
+Journal cover artwork supplied by Evander. The loose journal page sprite is from Strange by Sven Hjól; see LICENSE.charm-and-strange.
+
+Evander supplied the current journal spread, item art, title plates, dividers,
+glyphs, paperclip, and action icons. The journal uses new cloth bookmark tabs
+and a native ink highlight for index rows.
+
+The Spade and Slime Stone are inspired by Quark’s Trowel and Slime in a Bucket (Violet Moon, build 4.1-488). Evander supplied the Spade, Slime Stone, Knowledge Stone and Coral Squid Spawn Egg artwork.
+
+Tombstones: purchased models and textures by Six for Nexo Assets. https://mcmodels.net/vendors/18/nexo-assets . These assets are not licensed under the Charm/Strange MIT license.
+
+Runic amethyst and the journal’s carved glyph faces derive from Strange by Sven Hjól (MIT; see LICENSE.charm-and-strange). Evander supplied the Rune Dust, Rune Pearl and journal back, edit and trash artwork.
+
+Decorative amethyst textures by Nexo Assets, from the purchased Amethyst pack. https://mcmodels.net/vendors/18/nexo-assets
+Single-face glyph variants on the amethyst bricks by Evander. The purchased artwork retains its own license.
+
+Protogen: Minecraft Protogen Model by Endles13, adapted for Protomod by downloadableduck.
+https://sketchfab.com/3d-models/minecraft-protogen-model-1cf00d1d4fda4a008036410fc213bdee
+This port converts the Protomod geometry into Horizon model parts, preserving pivots
+and face UVs and scaling the model to a hostile mob. The adapted model is provided
+under CC BY-NC-SA 4.0, including the changes to the model in this port:
+https://creativecommons.org/licenses/by-nc-sa/4.0/ (LICENSE.protogen-model).
+Protomod supplies the default Ice skin and the idle, walk and punch clips; the clips
+were converted into Horizon keyframes. Protomod lists MIT (LICENSE.protomod).
+https://modrinth.com/mod/protomod
+https://github.com/downloadableduck/protomod/tree/eb7b7397a368e471f044c7fae8970a2b6f8d1f7f
+The green, indigo, magenta, purple, red and yellow Protogen skin variations are
+Evander's recolors of the Ice skin.

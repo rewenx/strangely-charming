@@ -79,6 +79,28 @@ fn squid() -> Part {
     root
 }
 
+fn protogen_document(name: &str) -> serde_json::Value {
+    let contents = horizon_mods::strangely_charming_content::FILES.iter()
+        .find(|(path, _)| *path == name).expect("packaged protogen asset").1;
+    serde_json::from_slice(contents).expect("valid protogen document")
+}
+
+pub(super) fn pose_protogen(s: &super::anim::State, poses: &mut super::anim::Poses) {
+    use super::keyframes::Animation;
+    static CLIPS: std::sync::OnceLock<[Animation; 3]> = std::sync::OnceLock::new();
+    let [idle, walk, punch] = CLIPS.get_or_init(|| {
+        let doc = protogen_document("assets/strangely_charming/protogen/clips.json");
+        ["idle", "walk", "punch_right"].map(|name| Animation::parse(&doc[name]))
+    });
+    let speed = s.speed.clamp(0., 1.);
+    idle.apply((s.age * 50.) as i64, 1. - speed, poses);
+    if speed > 0. { walk.apply((s.pos * 175.) as i64, speed, poses); }
+    if s.swing > 0. { punch.apply((s.swing * 2000.) as i64, 1., poses); }
+    let head = poses.get("head");
+    head[3] += s.x_rot.to_radians();
+    head[4] += s.y_rot.to_radians();
+}
+
 pub(super) fn load(
     root: &Path,
     render: bool,
@@ -93,6 +115,22 @@ pub(super) fn load(
             let model = Arc::new(squid());
             kind.model = model.clone();
             kind.layers.insert("squid#main".into(), model);
+        }
+    }
+    let skeleton = types.types.get("minecraft:skeleton").map(|k| (k.width, k.height, k.eye_height));
+    let ocelot = types.types.get("minecraft:ocelot").map(|k| (k.sounds, k.step_sound, k.ambient_interval));
+    if let Some(kind) = types.types.get_mut("strangely_charming:protogen") {
+        if let Some(size) = skeleton { (kind.width, kind.height, kind.eye_height) = size; }
+        if let Some(voice) = ocelot { (kind.sounds, kind.step_sound, kind.ambient_interval) = voice; }
+        // Borrow melee AI, not the zombie's sunlight vulnerability or undead potion rules.
+        kind.flags.burns_in_day = false;
+        kind.flags.undead = false;
+        kind.texture = "strangely_charming:entity/protogen".into();
+        if render {
+            let rig = protogen_document("assets/strangely_charming/protogen/rig.json");
+            let model = Arc::new(Part::parse("root", &rig));
+            kind.model = model.clone();
+            kind.layers.insert("protogen#main".into(), model);
         }
     }
     Ok(types)

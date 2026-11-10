@@ -1,0 +1,92 @@
+{
+  // Let villagers claim beehives and trade bee supplies.
+  "beekeepers": true,
+  // Spawn coral squids near living coral in warm oceans.
+  "coral_squids": true,
+  // Allow crying obsidian in Nether portal frames.
+  "crying_obsidian_frames": true,
+  // Reroll an untraded villager’s offers from the trade window.
+  "cycle_villager_trades": true,
+  // Craft and stonecut eight decorative amethyst blocks.
+  "decorative_amethyst": true,
+  // Add reusable totems that store and return XP.
+  "enchanting_totems": true,
+  // Guide nearby chorus fruit teleports to Ender Pearl Blocks.
+  "ender_pearl_blocks": true,
+  // Add advancements for discovering the mod’s features.
+  "exploration_advancements": true,
+  // Add crafting recipes for supplies and salvage.
+  "extra_recipes": true,
+  // Transfer enchantments onto books at a grindstone.
+  "extract_enchantments": true,
+  // Add treasure to Nether fortress chests.
+  "fortress_loot": true,
+  // Toggle full brightness with a hotkey.
+  "fullbright": true,
+  // Show the direction to your latest unclaimed grave within 100 blocks.
+  "grave_wayfinder": true,
+  // Keep death inventories in owner-only gravestones.
+  "gravestones": true,
+  // Recover materials from undamaged, unenchanted armor at a grindstone.
+  "grindable_armor": true,
+  // Merge stacks and sort a backpack or open storage container.
+  "inventory_tidying": true,
+  // Use a Totem of Undying from anywhere in your inventory.
+  "inventory_totem": true,
+  // Link a hovered inventory item in chat with Shift and your chat key.
+  "item_sharing": true,
+  // Add kilns that quickly fire clay, sand, and similar materials.
+  "kilns": true,
+  // Learn missing recipes or light rune portals with a Knowledge Stone.
+  "knowledge_stone": true,
+  // List an enchanted book first when a novice librarian rolls one.
+  "librarian_book_first": true,
+  // Add Table Saws for woodcutting and lumberjack villagers.
+  "lumberjacks": true,
+  // Add treasure to woodland mansion chests.
+  "mansion_loot": true,
+  // Generate ore in stone and deepslate mineshaft floors.
+  "mineshaft_ores": true,
+  // Generate glowing moonstone geodes in the outer End.
+  "moonstones": true,
+  // Turn an eligible adult villager into a daylight-safe zombie villager.
+  "poison_apple": true,
+  // Open a crafting grid while carrying a crafting table.
+  "portable_crafting": true,
+  // Prevent accidental attacks on your own pets.
+  "protect_pets": true,
+  // Summon hostile protogens during the two creature mishaps at unknown runes.
+  "protogen_mishaps": true,
+  // Let raid captains drop a reusable horn that ends nearby raids.
+  "raid_horns": true,
+  // Unanchored rune circle frequency in percent (100 = normal); only affects newly generated chunks.
+  "rune_circle_frequency": 100,
+  // Restore damaged natural rune circles with a Restoration Ruby.
+  "rune_circle_repair": true,
+  // Generate rune circles in grasslands and above three Overworld structures.
+  "rune_circles": true,
+  // Travel through runes, study glyphs, and build journal portals.
+  "rune_travel": true,
+  // Add the Runebreaker tool for destroying carved runestones.
+  "runebreaker": true,
+  // Add Writing Desks and Scrollkeepers who offer local quests.
+  "scrollkeepers": true,
+  // Use a Slime Stone to test for an Overworld slime chunk.
+  "slime_stone": true,
+  // Place a random block from your hotbar with a wooden Spade.
+  "spade": true,
+  // Stack matching enchanted books up to 16.
+  "stackable_enchanted_books": true,
+  // Stack matching potions up to 16.
+  "stackable_potions": true,
+  // Stack matching mushroom stew, rabbit stew, or beetroot soup up to 16.
+  "stackable_stews": true,
+  // Record locations and photos in a journal, share pages, and make marked maps.
+  "travel_journal": true,
+  // Generate buried ruins in snowy Overworld biomes and the Nether.
+  "underground_ruins": true,
+  // Allow survival anvil work costing more than 39 levels.
+  "unlimited_anvil": true,
+  // Let nearby villagers follow a player holding an emerald block.
+  "villagers_follow_emerald_blocks": true
+}

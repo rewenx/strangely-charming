@@ -11,7 +11,7 @@
       "text": "Place a book and enchanted gear in a grindstone."
     },
     "frame": "task",
-    "show_toast": true,
+    "show_toast": false,
     "announce_to_chat": false
   },
   "criteria": {

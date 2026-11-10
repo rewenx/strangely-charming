@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "strangely_charming:knowledge_stone"
+  ],
+  "result": {
+    "id": "minecraft:blue_dye",
+    "count": 7
+  }
+}

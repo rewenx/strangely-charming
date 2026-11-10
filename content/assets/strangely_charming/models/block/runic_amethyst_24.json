@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "strangely_charming:block/amethyst_2",
+    "north": "strangely_charming:block/runic_amethyst_24",
+    "south": "strangely_charming:block/amethyst_2",
+    "east": "strangely_charming:block/amethyst_2",
+    "west": "strangely_charming:block/amethyst_2",
+    "up": "strangely_charming:block/amethyst_2",
+    "down": "strangely_charming:block/amethyst_2"
+  }
+}

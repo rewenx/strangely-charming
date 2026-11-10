@@ -1,0 +1,11 @@
+{
+  "template": "minecraft:stick",
+  "max_stack_size": 64,
+  "rarity": "epic",
+  "components": {
+    "minecraft:item_name": {
+      "translate": "item.strangely_charming.restoration_ruby"
+    },
+    "minecraft:enchantment_glint_override": true
+  }
+}

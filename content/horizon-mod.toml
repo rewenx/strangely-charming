@@ -1,6 +1,6 @@
 id = "strangely_charming"
 name = "Strangely Charming"
-version = "0.2.11"
+version = "0.2.42"
 description = "Configurable crafting, exploration, and village features for Horizon"
 authors = ["Evander"]
 api = "0.2"

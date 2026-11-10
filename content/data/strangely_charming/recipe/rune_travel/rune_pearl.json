@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "minecraft:ender_pearl",
+    "strangely_charming:rune_dust"
+  ],
+  "result": {
+    "id": "strangely_charming:rune_pearl",
+    "count": 1
+  }
+}

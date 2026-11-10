@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "strangely_charming:slime_stone",
+  "pattern": [
+    "MMM",
+    "MCM",
+    "MMM"
+  ],
+  "key": {
+    "M": "minecraft:sugar_cane",
+    "C": "minecraft:water_bucket"
+  },
+  "result": {
+    "id": "strangely_charming:slime_stone",
+    "count": 1
+  }
+}

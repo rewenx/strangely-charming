@@ -11,7 +11,7 @@
       "text": "Carry a crafting table and press the Portable Crafting key (default V)."
     },
     "frame": "task",
-    "show_toast": true,
+    "show_toast": false,
     "announce_to_chat": false
   },
   "criteria": {

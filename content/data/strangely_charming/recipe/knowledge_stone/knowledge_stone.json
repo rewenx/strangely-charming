@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "strangely_charming:knowledge_stone",
+  "pattern": [
+    "MMM",
+    "MCM",
+    "MMM"
+  ],
+  "key": {
+    "M": "minecraft:lapis_lazuli",
+    "C": "minecraft:experience_bottle"
+  },
+  "result": {
+    "id": "strangely_charming:knowledge_stone",
+    "count": 1
+  }
+}

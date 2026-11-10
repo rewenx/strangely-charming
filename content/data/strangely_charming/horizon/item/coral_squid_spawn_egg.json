@@ -1,0 +1,9 @@
+{
+  "template": "minecraft:squid_spawn_egg",
+  "max_stack_size": 64,
+  "components": {
+    "minecraft:item_name": {
+      "translate": "item.strangely_charming.coral_squid_spawn_egg"
+    }
+  }
+}

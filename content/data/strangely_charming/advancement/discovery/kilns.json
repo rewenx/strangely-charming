@@ -22,7 +22,7 @@
       "text": "Craft a kiln to fire clay and glass."
     },
     "frame": "task",
-    "show_toast": true,
+    "show_toast": false,
     "announce_to_chat": false
   },
   "parent": "strangely_charming:discovery/root"

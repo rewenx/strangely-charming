@@ -1,4 +1,12 @@
 fn hook(game: &mut crate::game::Game<'_>, pos: [i32; 3], canceled: &mut bool) {
+    if !*canceled && (game.sc_restore_click(pos) || game.sc_ignite(pos)) {
+        *canceled = true;
+        return;
+    }
+    if !*canceled && game.sc_grave_use(pos) {
+        *canceled = true;
+        return;
+    }
     if game.block_name(pos).as_ref() == "strangely_charming:writing_desk" && !game.native_sneaking()
     {
         *canceled = true;

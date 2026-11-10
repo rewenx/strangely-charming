@@ -1,0 +1,41 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "strangely_charming:circle/weathered_0",
+        "processors": "strangely_charming:desert_circle",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "strangely_charming:circle/weathered_1",
+        "processors": "strangely_charming:desert_circle",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "strangely_charming:circle/weathered_2",
+        "processors": "strangely_charming:desert_circle",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "strangely_charming:circle/weathered_3",
+        "processors": "strangely_charming:desert_circle",
+        "projection": "rigid"
+      }
+    }
+  ]
+}

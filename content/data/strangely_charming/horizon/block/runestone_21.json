@@ -2,7 +2,8 @@
   "template": "minecraft:obsidian",
   "item": false,
   "properties": {
-    "hardness": 50,
+    "hardness": 25,
+    "sounds": "minecraft:glass",
     "explosion_resistance": 3600000,
     "requires_tool": true
   }

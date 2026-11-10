@@ -1,0 +1,10 @@
+{
+  "template": "minecraft:stick",
+  "max_stack_size": 64,
+  "components": {
+    "minecraft:item_name": {
+      "translate": "item.strangely_charming.knowledge_stone"
+    },
+    "minecraft:enchantment_glint_override": true
+  }
+}

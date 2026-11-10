@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "strangely_charming:block/runic_amethyst_13"
+    },
+    "facing=east": {
+      "model": "strangely_charming:block/runic_amethyst_13",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "strangely_charming:block/runic_amethyst_13",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "strangely_charming:block/runic_amethyst_13",
+      "y": 270
+    },
+    "facing=up": {
+      "model": "strangely_charming:block/runic_amethyst_13",
+      "x": 270
+    },
+    "facing=down": {
+      "model": "strangely_charming:block/runic_amethyst_13",
+      "x": 90
+    }
+  }
+}

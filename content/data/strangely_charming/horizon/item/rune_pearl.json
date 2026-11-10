@@ -1,0 +1,13 @@
+{
+  "template": "minecraft:ender_pearl",
+  "max_stack_size": 64,
+  "components": {
+    "minecraft:item_name": {
+      "translate": "item.strangely_charming.rune_pearl"
+    },
+    "minecraft:use_cooldown": {
+      "seconds": 1.0,
+      "cooldown_group": "minecraft:ender_pearl"
+    }
+  }
+}

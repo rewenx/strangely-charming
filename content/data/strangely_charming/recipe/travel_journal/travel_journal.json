@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "minecraft:writable_book",
+    "minecraft:compass"
+  ],
+  "result": {
+    "id": "strangely_charming:travel_journal",
+    "count": 1
+  }
+}

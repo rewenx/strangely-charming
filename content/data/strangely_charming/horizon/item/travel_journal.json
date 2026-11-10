@@ -1,0 +1,9 @@
+{
+  "template": "minecraft:paper",
+  "max_stack_size": 1,
+  "components": {
+    "minecraft:item_name": {
+      "translate": "item.strangely_charming.travel_journal"
+    }
+  }
+}

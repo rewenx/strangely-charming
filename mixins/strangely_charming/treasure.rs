@@ -1,4 +1,37 @@
 fn hook(id: &str, table: &mut Value) {
+    if crate::evanders_config::enabled("rune_travel")
+        && (matches!(
+            id,
+            "minecraft:chests/abandoned_mineshaft"
+                | "minecraft:chests/ancient_city"
+                | "minecraft:chests/ancient_city_ice_box"
+                | "minecraft:chests/stronghold_corridor"
+                | "minecraft:chests/stronghold_crossing"
+                | "minecraft:chests/stronghold_library"
+        ) || matches!(
+            id.strip_prefix("minecraft:chests/trial_chambers/"),
+            Some("corridor" | "entrance" | "intersection" | "intersection_barrel" | "supply")
+        ))
+        && let Some(pools) = table["pools"].as_array_mut()
+    {
+        pools.push(serde_json::json!({"rolls":1,"condition":{"type":"minecraft:random_chance","chance":0.20},"entries":[{"type":"minecraft:item","name":"strangely_charming:rune_dust","modifier":[{"type":"minecraft:set_count","count":{"type":"minecraft:uniform","min":2,"max":4}}]}]}));
+    }
+    if matches!(id, "strangely_charming:chests/underground_ruins" | "strangely_charming:chests/nether_halls")
+        && let Some(pools) = table["pools"].as_array_mut()
+    {
+        let bonus = |name: &str, chance: f32, low: i32, high: i32| serde_json::json!({
+            "rolls":1, "condition":{"type":"minecraft:random_chance","chance":chance},
+            "entries":[{"type":"minecraft:item","name":name,"modifier":[{"type":"minecraft:set_count",
+                "count":{"type":"minecraft:uniform","min":low,"max":high}}]}]
+        });
+        if crate::evanders_config::enabled("rune_travel") {
+            pools.push(bonus("strangely_charming:rune_dust", 0.20, 3, 6));
+            pools.push(bonus("strangely_charming:rune_pearl", 0.10, 1, 1));
+        }
+        if crate::evanders_config::enabled("ender_pearl_blocks") {
+            pools.push(bonus("strangely_charming:ender_pearl_block", 0.08, 1, 1));
+        }
+    }
     let bonus: Option<(&str, f32, &[&str])> = match id {
         "minecraft:chests/end_city_treasure" => {
             Some(("enchanting_totems", 0.125, &["totem_of_enchanting"]))

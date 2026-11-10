@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "##"
+  ],
+  "key": {
+    "#": "strangely_charming:amethyst_3"
+  },
+  "result": {
+    "id": "strangely_charming:amethyst_5",
+    "count": 2
+  }
+}

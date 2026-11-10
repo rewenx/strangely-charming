@@ -1,0 +1,143 @@
+{
+  "generic": [
+    "river",
+    "frozen_river",
+    "beach",
+    "snowy_beach",
+    "stony_shore",
+    "grove",
+    "snowy_slopes",
+    "end_midlands",
+    "end_barrens",
+    "small_end_islands",
+    "the_void"
+  ],
+  "plains": [
+    "plains",
+    "sunflower_plains"
+  ],
+  "oak_forest": [
+    "forest"
+  ],
+  "birch_forest": [
+    "birch_forest",
+    "old_growth_birch_forest"
+  ],
+  "flower_meadow": [
+    "meadow"
+  ],
+  "dark_forest": [
+    "dark_forest"
+  ],
+  "cherry_grove": [
+    "cherry_grove"
+  ],
+  "pale_garden": [
+    "pale_garden"
+  ],
+  "taiga": [
+    "taiga",
+    "old_growth_pine_taiga",
+    "old_growth_spruce_taiga"
+  ],
+  "snowy_taiga": [
+    "snowy_taiga"
+  ],
+  "snowy_plains": [
+    "snowy_plains"
+  ],
+  "ice_spikes": [
+    "ice_spikes"
+  ],
+  "mountains": [
+    "frozen_peaks",
+    "jagged_peaks"
+  ],
+  "desert": [
+    "desert"
+  ],
+  "badlands": [
+    "badlands",
+    "eroded_badlands",
+    "wooded_badlands"
+  ],
+  "savanna": [
+    "savanna",
+    "savanna_plateau",
+    "windswept_savanna"
+  ],
+  "swamp": [
+    "swamp"
+  ],
+  "mangrove_swamp": [
+    "mangrove_swamp"
+  ],
+  "mushroom_fields": [
+    "mushroom_fields"
+  ],
+  "ocean": [
+    "ocean",
+    "deep_ocean",
+    "cold_ocean",
+    "deep_cold_ocean",
+    "lukewarm_ocean",
+    "deep_lukewarm_ocean"
+  ],
+  "warm_ocean": [
+    "warm_ocean"
+  ],
+  "frozen_ocean": [
+    "frozen_ocean",
+    "deep_frozen_ocean"
+  ],
+  "lush_caves": [
+    "lush_caves"
+  ],
+  "dripstone_caves": [
+    "dripstone_caves"
+  ],
+  "deep_dark": [
+    "deep_dark"
+  ],
+  "sulfur_caves": [
+    "sulfur_caves"
+  ],
+  "nether_wastes": [
+    "nether_wastes"
+  ],
+  "crimson_forest": [
+    "crimson_forest"
+  ],
+  "warped_forest": [
+    "warped_forest"
+  ],
+  "soul_sand_valley": [
+    "soul_sand_valley"
+  ],
+  "basalt_deltas": [
+    "basalt_deltas"
+  ],
+  "end_islands": [
+    "end_highlands"
+  ],
+  "dappled_forest": [
+    "dappled_forest"
+  ],
+  "flower_forest": [
+    "flower_forest"
+  ],
+  "end_center": [
+    "the_end"
+  ],
+  "stony_highlands": [
+    "stony_peaks",
+    "windswept_hills",
+    "windswept_forest",
+    "windswept_gravelly_hills"
+  ],
+  "jungle": [
+    "jungle",
+    "bamboo_jungle",
+    "sparse_jungle"
+  ]
+}

@@ -13,7 +13,7 @@ pub fn infect(z: &mut Mob, original_no_ai: bool) -> Tag {
     std::sync::Arc::make_mut(&mut z.kind).flags.burns_in_day = false;
     z.no_ai = true;
     z.velocity = horizon_core::geometry::Vec3::ZERO;
-    z.add_effect("minecraft:weakness", 100, 99);
+    z.add_effect_with("minecraft:weakness", 5 * 60 * 20, 99, false, true);
     z.add_effect("minecraft:slowness", 100, 99);
     let mut state = Compound::new();
     state.insert("stun".into(), Tag::Int(100));

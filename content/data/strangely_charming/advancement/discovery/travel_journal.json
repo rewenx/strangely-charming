@@ -1,0 +1,29 @@
+{
+  "parent": "strangely_charming:discovery/root",
+  "display": {
+    "icon": {
+      "id": "strangely_charming:travel_journal"
+    },
+    "title": {
+      "text": "Wish You Were Here"
+    },
+    "description": {
+      "text": "Craft a Strangely Charming Journal to record your travels."
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "obtain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "strangely_charming:travel_journal"
+          }
+        ]
+      }
+    }
+  }
+}

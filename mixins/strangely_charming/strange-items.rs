@@ -89,6 +89,43 @@ impl Game<'_> {
         if stack.count == 0 {
             return false;
         }
+        if stack.item.as_ref() == super::sc_runes::PEARL && super::sc_runes::enabled() {
+            return self.sc_throw_rune(stack);
+        }
+        if stack.item.as_ref() == super::sc_field_items::KNOWLEDGE
+            && horizon_mods::evanders_config::enabled("knowledge_stone")
+        {
+            if self.remote.is_none() {
+                if self
+                    .pick()
+                    .is_some_and(|hit| self.sc_igniter_target(hit.pos, Some(stack)))
+                {
+                    return true;
+                }
+                if !self.sc_unlock_recipes() {
+                    return true;
+                }
+                let held = self.held_mut();
+                if let Some(s) = held {
+                    s.count -= 1;
+                    if s.count == 0 {
+                        *held = None;
+                    }
+                }
+            }
+            return true;
+        }
+        if stack.item.as_ref() == super::sc_field_items::SLIME
+            && horizon_mods::evanders_config::enabled("slime_stone")
+        {
+            if self.remote.is_none() {
+                self.sc_use_slime();
+            }
+            return true;
+        }
+        if self.sc_travel_use(stack) {
+            return true;
+        }
         if horizon_mods::evanders_config::enabled("scrollkeepers")
             && let Some(kind) = super::sc_quests::Kind::item(&stack.item)
         {

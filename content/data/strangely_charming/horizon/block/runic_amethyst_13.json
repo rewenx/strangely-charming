@@ -1,0 +1,20 @@
+{
+  "template": "minecraft:amethyst_block",
+  "item": true,
+  "state_properties": {
+    "facing": {
+      "type": "enum",
+      "values": [
+        "north",
+        "east",
+        "south",
+        "west",
+        "up",
+        "down"
+      ]
+    }
+  },
+  "default_state": {
+    "facing": "north"
+  }
+}

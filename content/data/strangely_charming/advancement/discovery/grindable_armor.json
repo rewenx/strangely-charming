@@ -11,7 +11,7 @@
       "text": "Use a grindstone to recover material from fully repaired, unenchanted armor."
     },
     "frame": "task",
-    "show_toast": true,
+    "show_toast": false,
     "announce_to_chat": false
   },
   "criteria": {

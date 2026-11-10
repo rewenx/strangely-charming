@@ -11,7 +11,7 @@
       "text": "Meet a coral squid in its natural habitat."
     },
     "frame": "task",
-    "show_toast": true,
+    "show_toast": false,
     "announce_to_chat": false
   },
   "criteria": {
