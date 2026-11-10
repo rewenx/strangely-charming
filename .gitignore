@@ -1,1 +1,35 @@
-/target/
+# The public tree contains the mod source, build inputs, notices and README artwork.
+# Keep development notes, art masters, playtest output and signing files local.
+/*
+!/.gitignore
+!/README.md
+!/LICENSE*
+!/NOTICE*
+!/Cargo.toml
+!/Cargo.lock
+!/VERSION
+!/compatibility.json
+!/src/
+!/config/
+!/content/
+!/mixins/
+!/art/
+/art/*
+!/art/st_title_card.png
+!/tools/
+/tools/*
+!/tools/package.py
+!/tools/embed_content.py
+!/tools/portal_models.py
+!/tools/LICENSE*
+
+.DS_Store
+__pycache__/
+*.pyc
+*.psd
+*.aseprite
+*.log
+*.hnmod
+*.minisig
+*.key
+.env
