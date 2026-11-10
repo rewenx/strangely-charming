@@ -16,6 +16,7 @@
 !/art/
 /art/*
 !/art/st_title_card.png
+!/art/portal_biomes.json
 !/tools/
 /tools/*
 !/tools/package.py
