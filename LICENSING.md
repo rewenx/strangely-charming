@@ -13,13 +13,15 @@ Models and artwork by **Six / Nexo Assets** were purchased in these two packs:
 - [**Amethyst Blocks**](https://mcmodels.net/products/14702/amethyst-blocks): the eight decorative amethyst finishes and the base artwork used by the carved variants. The additional carvings are by EvanderFox.
 - [**Tombstone Furniture**](https://mcmodels.net/products/12671/tombstones): the Short, Ornate and Tall Tombstone models and textures.
 
-These assets are subject to the [MCModels terms](https://mcmodels.net/information/terms), identified in this document as **LicenseRef-MCModels**, not MIT. The [Nexo Assets FAQ](https://mcmodels.net/vendors/18/nexo-assets) permits use in non-Minecraft projects and asks for credit where possible.
+These assets are governed by the [MCModels terms](https://mcmodels.net/information/terms), identified here as **LicenseRef-MCModels**, not MIT. [MCModels' vendor rules, section 6e](https://mcmodels.net/information/vendor-terms), require those terms for marketplace products rather than separate store or product terms.
 
-The marketplace's Purchases section gives a “license to use commercially in-game.” Its general license allows selling cosmetics or rewards on a platform the licensee operates, but expressly excludes “Re-sell the assets; whether they are bundled with other files or not.” It also restricts source sharing with unlicensed people and redistribution without permission.
+The terms expressly contemplate assets “being put into a Minecraft resource pack” and permit commercial in-game use, including cosmetics or rewards on a platform the licensee operates. The [Nexo Assets FAQ](https://mcmodels.net/vendors/18/nexo-assets) also permits non-Minecraft projects and asks for credit where possible.
 
-The reviewed public terms and FAQ do not expressly authorize redistribution in downloadable mod bundles or editable-source form. This notice records provenance and applicable terms; it is not an additional redistribution grant or a claim that every distribution method is cleared. Obtain specific permission where required. Public terms checked November 11, 2026.
+[Nexo's resource-pack FAQ](https://docs.nexomc.com/general-usage/faq) describes merging packs and sending the result to players; its [plugin settings](https://docs.nexomc.com/configuration/plugin-settings) allow unobfuscated packs. Delivering runtime textures and models to players, or making them technically recoverable, does not by itself establish prohibited source-file sharing.
 
-The public source checkout omits the standalone Nexo runtime files listed in [tools/release_art.json](tools/release_art.json). The build helper can recover those bytes from the existing release archive. Embedding or recovering artwork this way does not change its license or grant permission to redistribute it.
+The same MCModels terms restrict asset resale, source sharing with unlicensed people and unauthorized redistribution. They do not precisely define how those restrictions apply to public mods used independently of the purchaser's operated platform. This overview does not declare downloadable mods prohibited, nor grant rights beyond the applicable terms. Public sources checked November 11, 2026.
+
+Strangely Charming uses these assets as integrated game content. Its `.hnmod` embeds runtime PNG textures and JSON models in generated Rust; the public source checkout omits the loose Nexo runtime files listed in [tools/release_art.json](tools/release_art.json). The build helper recovers those bytes from the existing release for reproducible builds. These packaging choices do not relicense the artwork or determine whether a particular use is permitted.
 
 ## 3. Charm, Strange, Horizon and the native template: MIT
 
