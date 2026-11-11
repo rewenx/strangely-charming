@@ -4,6 +4,7 @@
 !/.gitignore
 !/README.md
 !/LICENSE*
+!/LICENSING.md
 !/NOTICE*
 !/Cargo.toml
 !/Cargo.lock
@@ -20,6 +21,7 @@
 !/tools/
 /tools/*
 !/tools/package.py
+!/tools/test_package.py
 !/tools/embed_content.py
 !/tools/portal_models.py
 !/tools/LICENSE*

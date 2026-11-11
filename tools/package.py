@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Package the mod as a source-only `.hnmod`, the file Horizon's registry and launcher take.
 
-The archive holds `horizon-native.json` and `mixins/<id>/` (only `.rs` and `.toml`), with fixed dates and
+The archive holds `horizon-native.json`, licensing documents and `mixins/<id>/` source and notices, with fixed dates and
 modes, so the same sources always give the same bytes and the same SHA-256. Horizon's
 `horizon_mods::index::native` reads it without running anything; the launcher compiles it on the pinned
 Horizon revision. Based on levzzz5154's packager for Veinminer.
@@ -15,9 +15,16 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 GAME = '26.3'
+ROOT_NOTICES = {'LICENSE': 'LICENSE', 'LICENSING.md': 'LICENSES.md'}
+BUNDLE_NOTICES = ('NOTICE', 'LICENSE.template', 'LICENSE.charm', 'LICENSE.charm-and-strange',
+                  'LICENSE.horizon', 'LICENSE.protomod', 'LICENSE.protogen-model')
 
 
 def package():
+    # Check required notices before regeneration or writing any package bytes.
+    for name in ROOT_NOTICES:
+        if not (ROOT / name).is_file():
+            raise SystemExit(f'Missing packaged notice: {name}')
     subprocess.run(["python3", str(ROOT / "tools/embed_content.py")], check=True)
     compat = json.loads((ROOT / 'compatibility.json').read_text())
     manifests = sorted((ROOT / 'mixins').glob('*/horizon-mixin.toml'))
@@ -38,9 +45,24 @@ def package():
     for path in sorted(bundle.iterdir()):
         if path.is_file() and (path.suffix in ('.rs', '.toml') or path.name.startswith(('NOTICE', 'LICENSE', 'README'))):
             files[path.relative_to(ROOT).as_posix()] = path.read_bytes()
-    for required in ('NOTICE', 'LICENSE.template'):
+    for required in BUNDLE_NOTICES:
         if f'mixins/{mod["id"]}/{required}' not in files:
             raise SystemExit(f'Missing packaged notice: {required}')
+    # Horizon permits notices only below mixins/<id>/, with recognized names.
+    # Keep LICENSING.md canonical in the repository and adapt its relative links
+    # in the packaged LICENSES.md copy so the bundled notices remain navigable.
+    for source_name, archive_name in ROOT_NOTICES.items():
+        data = (ROOT / source_name).read_bytes()
+        if source_name == 'LICENSING.md':
+            data = (data.decode('utf-8')
+                    .replace(f'(mixins/{mod["id"]}/', '(')
+                    .replace('(tools/release_art.json)',
+                             '(https://github.com/rewenx/strangely-charming/blob/main/tools/release_art.json)')
+                    .encode('utf-8'))
+        target = f'mixins/{mod["id"]}/{archive_name}'
+        if target in files:
+            raise SystemExit(f'Duplicate packaged notice: {target}')
+        files[target] = data
     out = ROOT / 'target' / f"{mod['id']}-{mod['version']}.hnmod"
     out.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(out, 'w', compression=zipfile.ZIP_DEFLATED) as archive:

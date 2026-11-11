@@ -66,3 +66,12 @@ https://modrinth.com/mod/protomod
 https://github.com/downloadableduck/protomod/tree/eb7b7397a368e471f044c7fae8970a2b6f8d1f7f
 The green, indigo, magenta, purple, red and yellow Protogen skin variations are
 Evander's recolors of the Ice skin.
+
+Licensing clarification (November 11, 2026): see the root LICENSING.md for the
+original-work MIT license and third-party exceptions. Upstream notices remain
+in force. The purchased Nexo packs are Amethyst Blocks
+(https://mcmodels.net/products/14702/amethyst-blocks) and Tombstone Furniture
+(https://mcmodels.net/products/12671/tombstones). Their applicable terms are at
+https://mcmodels.net/information/terms, referenced as LicenseRef-MCModels.
+Neither the root MIT license nor this credit relicenses the purchased artwork.
+In a .hnmod archive, the overview is packaged beside this notice as LICENSES.md.

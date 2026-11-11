@@ -2,6 +2,7 @@
 name = "strangely_charming"
 version = "0.2.42"
 edition = "2024"
+license-file = "LICENSING.md"
 description = "Configurable crafting, exploration, and village features for Horizon"
 
 [lib]
